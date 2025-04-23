@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -22,17 +23,29 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    @Column(name = "user_id")
+    private Long id;
 
-    private String name;
+    private String username;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
-    private String password;
+    private String password; // null for oauth
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "user_role")
     private UserRole userRole;
+
+    private String provider; // google
+
+    @Column(name = "provider_id")
+    private String providerId;
+
+    private String pictureUrl;  // URL аватарки из Google, иначе загрузить самому
+
+    @Column(name = "email_verified")
+    private boolean emailVerified;  // true/false
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(userRole.name()));
