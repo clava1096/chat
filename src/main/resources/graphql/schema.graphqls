@@ -1,3 +1,13 @@
+#type Post {
+#  id: ID!
+#  title: String!
+#  content: String!
+#  author: User!
+#  createdAt: String!
+#  comments: [Comment!]!
+#  likes: [Like!]!  # Добавляем связь с лайками
+#  likesCount: Int! # Опционально: счетчик лайков
+#}
 type Post {
   id: ID!
   title: String!
@@ -6,16 +16,38 @@ type Post {
   createdAt: String!
 }
 
+input PostInput {
+  title: String!
+  content: String!
+  linkImage: String
+}
+
 type User {
   id: ID!
   username: String!
 }
 
+type Comment {
+  id: ID!
+  text: String!
+}
+
 type Query {
-  getAllPosts: [Post!]!
   getPost(id: ID!): Post
+  getAllPosts: [Post!]!
+  searchPosts(keyword: String!): [Post!]!
 }
 
 type Mutation {
-  createPost(title: String!, content: String!): Post!
+  #createPost(title: String!, content: String!): Post!
+  createPost(input: PostInput!): Post!
+  updatePost(id: ID!, title: String, content: String): Post!
+  deletePost(id: ID!): Boolean!
+}
+
+type Like {
+  id: ID!
+  user: User!
+  post: Post!
+  createdAt: String!
 }

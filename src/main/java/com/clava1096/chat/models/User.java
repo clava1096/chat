@@ -3,13 +3,11 @@ package com.clava1096.chat.models;
 import com.clava1096.chat.models.enumpack.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -33,7 +31,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "user_role")
-    private UserRole userRole;
+    private UserRole userRole = UserRole.ROLE_USER;
 
     private String provider; // google
 
@@ -43,7 +41,7 @@ public class User {
     private String pictureUrl;  // URL аватарки из Google, иначе загрузить самому
 
     @Column(name = "email_verified")
-    private boolean emailVerified;  // true/false
+    private boolean emailVerified = false;  // true/false
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(userRole.name()));

@@ -12,4 +12,5 @@ public interface UserService {
 
     AuthenticatedUserDTO findAuthenticatedUserByUsername(String username);
 
+    User getCurrentUser();
 }
