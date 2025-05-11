@@ -1,6 +1,5 @@
 package com.clava1096.chat.services;
 
-import com.clava1096.chat.mappers.UserMapper;
 import com.clava1096.chat.models.User;
 import com.clava1096.chat.models.enumpack.UserRole;
 import com.clava1096.chat.models.repositories.UserRepository;
@@ -32,7 +31,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                                 .email(oAuth2User.getAttribute("email"))
                                 .username(oAuth2User.getAttribute("name"))
                                 .pictureUrl(oAuth2User.getAttribute("picture"))
-                                .emailVerified(oAuth2User.getAttribute("email_verified"))
+                                .emailVerified(Boolean.TRUE.equals(oAuth2User.getAttribute("email_verified")))
                                 .providerId(oAuth2User.getAttribute("sub"))
                                 .userRole(UserRole.ROLE_USER)
                                 .build()
@@ -41,3 +40,4 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return oAuth2User;
     }
 }
+
