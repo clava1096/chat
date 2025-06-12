@@ -1,5 +1,6 @@
 package com.clava1096.chat.models;
 
+import com.clava1096.chat.models.enumpack.MessageStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,9 +27,6 @@ public class Message {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime created;
 
-    @Column(name = "is_read", nullable = false)
-    private boolean isRead;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "sender_id",
@@ -54,4 +52,8 @@ public class Message {
             foreignKey = @ForeignKey(name = "fk_chat_room_id")
     )
     private ChatRoom chatRoom;
+
+    @Column(name = "message_status")
+    @Enumerated(EnumType.STRING)
+    private MessageStatus messageStatus;
 }

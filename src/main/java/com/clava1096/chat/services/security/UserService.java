@@ -6,6 +6,8 @@ import com.clava1096.chat.models.dto.security.RegistrationRequest;
 import com.clava1096.chat.models.dto.security.RegistrationResponse;
 
 public interface UserService {
+    User findById(Long id);
+
     User findByUsername(String username);
 
     RegistrationResponse registration(RegistrationRequest registrationRequest);
